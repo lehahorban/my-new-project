@@ -1,3 +1,86 @@
+
+
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { auth } from "../../firebase/config";
+import { authSlice } from "./authReduser";
+
+const { updateUserProfile, authStateChange, authSignOut } = authSlice.actions;
+console.log(authSlice)
+
+export const authSignUpUser =
+  ({ name, email, password }) =>
+  async (dispatch, getState) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+      // const { uid, displayName } = await auth.currentUser;
+      const user = await auth.currentUser;
+      console.log(user)
+      console.log(user.uid)
+      dispatch(authSlice.actions.updateUserProfile({ userId: user.uid }));
+      // dispatch(
+      //   updateUserProfile({
+      //     userId: uid,
+      //     name: displayName,
+      //     email,
+      //   })
+      // );
+    } catch (error) {
+      console.log("error", error);
+      console.log("error.message", error.message);
+    }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import { db } from "../../firebase/config";
 
 
@@ -135,43 +218,43 @@
 
 
 
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-  onAuthStateChanged,
-} from "firebase/auth";
-import { auth } from "../../firebase/config";
-import { authSlice } from "./authReduser";
+// import {
+//   createUserWithEmailAndPassword,
+//   signInWithEmailAndPassword,
+//   updateProfile,
+//   onAuthStateChanged,
+// } from "firebase/auth";
+// import { auth } from "../../firebase/config";
+// import { authSlice } from "./authReduser";
 
-const { updateUserProfile, authStateChange, authSignOut } = authSlice.actions;
-console.log(authSlice)
+// const { updateUserProfile, authStateChange, authSignOut } = authSlice.actions;
+// console.log(authSlice)
 
-export const authSignUpUser =
-  ({ name, email, password }) =>
-  async (dispatch, getState) => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(auth.currentUser, {
-        displayName: name,
-      });
-      // const { uid, displayName } = await auth.currentUser;
-      const user = await auth.currentUser;
-      console.log(user)
-      console.log(user.uid)
-      dispatch(authSlice.actions.updateUserProfile({ userId: user.uid }));
-      // dispatch(
-      //   updateUserProfile({
-      //     userId: uid,
-      //     name: displayName,
-      //     email,
-      //   })
-      // );
-    } catch (error) {
-      console.log("error", error);
-      console.log("error.message", error.message);
-    }
-    };
+// export const authSignUpUser =
+//   ({ name, email, password }) =>
+//   async (dispatch, getState) => {
+//     try {
+//       await createUserWithEmailAndPassword(auth, email, password);
+//       await updateProfile(auth.currentUser, {
+//         displayName: name,
+//       });
+//       // const { uid, displayName } = await auth.currentUser;
+//       const user = await auth.currentUser;
+//       console.log(user)
+//       console.log(user.uid)
+//       dispatch(authSlice.actions.updateUserProfile({ userId: user.uid }));
+//       // dispatch(
+//       //   updateUserProfile({
+//       //     userId: uid,
+//       //     name: displayName,
+//       //     email,
+//       //   })
+//       // );
+//     } catch (error) {
+//       console.log("error", error);
+//       console.log("error.message", error.message);
+//     }
+//     };
   
 
 // export const authSignInUser =
