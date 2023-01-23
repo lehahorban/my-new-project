@@ -15,11 +15,16 @@ export const authSlice = createSlice({
         updateUserProfile: (state, { payload }) => ({
             ...state,
             userId: payload.userId,
+            name: payload.name
             
-        })
-      
+        }),
+        authStateChange: (state, { payload }) => ({
+            ...state,
+            stateChange: payload.stateChange
+        }),
+        authSignOut: () => state,
     },
     
 })
 
-console.log(authSlice)
+// console.log(authSlice)

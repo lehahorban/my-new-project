@@ -15,6 +15,9 @@ import {
 } from "react-native";
 import image from "../../images/Photo-BG.jpg";
 import { useEffect, useState } from "react";
+import { authSignOutUser } from "../../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
+
 
 
 const initialState = {
@@ -31,6 +34,7 @@ const DefaultPostsScreen = ({navigation, route}) => {
   const [avatar, setAvatar] = useState(false);
   const [state, setState] = useState(initialState)
   const [posts, setPosts] = useState([])
+  const dispatch = useDispatch()
   useEffect(() => { 
     if (route.params) {
       setPosts(prevState => [...prevState, route.params])
@@ -63,6 +67,9 @@ console.log(posts)
   }
 
   // console.log("route.params", route.params)
+  const signOut = () => {
+    dispatch(authSignOutUser())
+  }
   
   
   return (
@@ -72,7 +79,7 @@ console.log(posts)
       <View style={styles.container}>
           <View style={styles.header}>
             <Text style={styles.postText}>Публікації</Text>            
-            <TouchableOpacity activeOpacity={0.8} style={styles.btnLogout}>              
+            <TouchableOpacity onPress={signOut} activeOpacity={0.8} style={styles.btnLogout}>              
                 <Image source={require("../../images/logout.png")}></Image>             
             </TouchableOpacity>
              

@@ -1,34 +1,40 @@
 
 import React from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from '@react-navigation/native';
-import useRoute from "./router";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-import { auth } from "./firebase/config";
-import { onAuthStateChanged } from "firebase/auth";
+import Main from "./Screens/components/Main";
 import { useState } from "react";
-import { async } from "@firebase/util";
+import Apploading from "expo-app-loading";
+import * as Font from "expo-font";
+
+const loadApplication = async () => {
+  await Font.loadAsync({
+    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
+    "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
+  });
+};
+
 
 const App = () => {  
-  const [user, setUser] = useState(null)  
+   const [isReady, setIsReady] = useState(false);
 
-  onAuthStateChanged(auth, (user) => setUser(user))
-
-
-  const routing = useRoute(user)
-  // console.log(routing)
-
+  if (!isReady) {
+    return (
+      <Apploading
+        startAsync={loadApplication}
+        onFinish={() => setIsReady(true)}
+        onError={console.warn}
+      />
+    );
+  }
 
   return (
     <View style={styles.container}>
     
     
       <Provider store={store}>
-          <NavigationContainer>
-        {routing}    
-    </NavigationContainer>
-    
+        <Main/>    
     </Provider>
     
   </View>
